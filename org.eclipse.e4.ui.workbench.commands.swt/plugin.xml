@@ -9,5 +9,15 @@
             class="org.eclipse.e4.ui.workbench.perspectiveswitcher.E4PerspectiveSwitcherProcessor">
       </processor>
    </extension>
-
+	<extension
+         point="org.eclipse.e4.ui.css.core.propertyHandler">
+      <handler
+            adapter="org.eclipse.e4.ui.css.swt.dom.CompositeElement"
+            composite="false"
+            handler="org.eclipse.e4.ui.workbench.perspectiveswitcher.handlers.PerspectiveSwitcherCSSHandler">
+         <property-name
+               name="eclipse-perspective-keyline-color">
+         </property-name>
+      </handler>
+   </extension>
 </plugin>

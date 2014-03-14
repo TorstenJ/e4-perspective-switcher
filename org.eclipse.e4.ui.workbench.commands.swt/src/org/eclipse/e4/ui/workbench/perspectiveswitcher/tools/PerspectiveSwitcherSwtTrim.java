@@ -622,4 +622,9 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
     });
   }
 
+  public void setKeylineColor(Color borderColor, Color curveColor) {
+    // this.borderColor = borderColor;
+    this.containerCurveColor = curveColor;
+  }
+
 }
