@@ -392,7 +392,7 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.eclipse.e4.ui.workbench.perspectiveswitcher.tools. IPerspectiveSwitcherControl
    * #setSelectedElement(org.eclipse.e4.ui.model.application .ui.advanced.MPerspective)
    */
@@ -476,8 +476,10 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
     }
 
     ToolItem toolItem = null;
-    // Items 0 & 1 in the toolbar are never perspectives
-    for (int i = 2; i < toolBar.getItems().length && toolItem == null; i++) {
+    // Items 0 & 1 in the toolbar are never perspectives when the "new" button is
+    // configured. Else they of course are...
+    int offset = showNewButton ? 2 : 0;
+    for (int i = offset; i < toolBar.getItems().length && toolItem == null; i++) {
       if (toolBar.getItem(i).getData() == perspective) {
         toolItem = toolBar.getItem(i);
       }
@@ -499,7 +501,7 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
   /**
    * Returns the open perspective image TODO: Evaluate whether this needs to ported into an Eclipse4 friendly version.
-   * 
+   *
    * @return the image
    */
   Image getOpenPerspectiveImage() {
