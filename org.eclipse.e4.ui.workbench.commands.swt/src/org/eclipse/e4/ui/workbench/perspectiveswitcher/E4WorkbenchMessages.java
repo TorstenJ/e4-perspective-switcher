@@ -7,11 +7,18 @@
  *
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.eclipse.e4.ui.workbench.perspectiveswitcher;
 
+/**
+ * Constants for messages.
+ *
+ */
 public class E4WorkbenchMessages {
 
-	public static final String OpenSelectPerspectiveWindow = "Open Perspective...";
-	
+  /**
+   * Constant for the "Open Perspective..." message.
+   */
+  public static final String OpenSelectPerspectiveWindow = "Open Perspective...";
+
 }

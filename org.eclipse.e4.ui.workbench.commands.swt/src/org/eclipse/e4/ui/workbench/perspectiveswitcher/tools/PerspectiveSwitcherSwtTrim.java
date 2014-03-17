@@ -30,11 +30,8 @@ import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
-import org.eclipse.e4.ui.model.application.ui.menu.MToolControl;
 import org.eclipse.e4.ui.workbench.IResourceUtilities;
 import org.eclipse.e4.ui.workbench.UIEvents;
-import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.E4WorkbenchMessages;
 import org.eclipse.e4.ui.workbench.perspectiveswitcher.commands.E4WorkbenchCommandConstants;
 import org.eclipse.emf.common.util.URI;
@@ -69,16 +66,14 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+/**
+ * The UI representation of the switcher.
+ *
+ */
 public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
   @Inject
   private Logger logger;
-
-  @Inject
-  private EModelService modelService;
-
-  @Inject
-  private EPartService partService;
 
   @Inject
   private ECommandService commandService;
@@ -139,8 +134,9 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
     dispose();
   }
 
+  @SuppressWarnings("unused")
   @PostConstruct
-  void createControl(Composite parent, MToolControl control) {
+  void createControl(Composite parent) {
     perspectiveSwitcher.setControlProvider(this);
     composite = new Composite(parent, SWT.None);
     RowLayout rowLayout = new RowLayout(SWT.HORIZONTAL);
@@ -286,6 +282,7 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
     r.dispose();
   }
 
+  @SuppressWarnings("unused")
   void openMenuFor(ToolItem item, MPerspective perspective) {
     final Menu menu = new Menu(toolBar);
     menu.setData(perspective);
@@ -361,8 +358,8 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
       @Override
       public void widgetSelected(SelectionEvent event) {
-        MPerspective perspective = (MPerspective) event.widget.getData();
-        E4Util.setWindowSelectedElement(perspective);
+        MPerspective lPerspective = (MPerspective) event.widget.getData();
+        E4Util.setWindowSelectedElement(lPerspective);
       }
     });
 
@@ -392,7 +389,7 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
   /*
    * (non-Javadoc)
-   *
+   * 
    * @see org.eclipse.e4.ui.workbench.perspectiveswitcher.tools. IPerspectiveSwitcherControl
    * #setSelectedElement(org.eclipse.e4.ui.model.application .ui.advanced.MPerspective)
    */
@@ -443,8 +440,8 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
 
   @Inject
   void setShowText(
-      @Preference(value = E4PerspectiveSwitcherPreferences.SHOW_TEXT, nodePath = E4PerspectiveSwitcherPreferences.ROOT_PREFERENCES_NODE) boolean showShortcutText) {
-    this.showShortcutText = showShortcutText;
+      @Preference(value = E4PerspectiveSwitcherPreferences.SHOW_TEXT, nodePath = E4PerspectiveSwitcherPreferences.ROOT_PREFERENCES_NODE) boolean pShowShortcutText) {
+    this.showShortcutText = pShowShortcutText;
 
     if (toolBar == null || toolBar.isDisposed()) {
       return;
@@ -624,6 +621,12 @@ public class PerspectiveSwitcherSwtTrim implements IPerspectiveSwitcherControl {
     });
   }
 
+  /**
+   * Sets the color spec from CSS.
+   *
+   * @param borderColor
+   * @param curveColor
+   */
   public void setKeylineColor(Color borderColor, Color curveColor) {
     // this.borderColor = borderColor;
     this.containerCurveColor = curveColor;

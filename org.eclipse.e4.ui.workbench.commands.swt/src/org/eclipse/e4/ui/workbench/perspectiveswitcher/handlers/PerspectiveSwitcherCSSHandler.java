@@ -21,9 +21,19 @@ import org.eclipse.swt.widgets.Control;
 import org.w3c.dom.css.CSSValue;
 import org.w3c.dom.css.CSSValueList;
 
+/**
+ * Handler for the CSS style attributes of {@link PerspectiveSwitcherSwtTrim}.
+ * <p>
+ * Currently only <code>eclipse-perspective-keyline-color</code> with up to two color parameters:
+ * <ol>
+ * <li>border color and
+ * <li>curve color
+ * </ol>
+ *
+ */
 public class PerspectiveSwitcherCSSHandler extends AbstractCSSPropertySWTHandler {
 
-  public static final ICSSPropertyHandler INSTANCE = new PerspectiveSwitcherCSSHandler();
+  protected static final ICSSPropertyHandler INSTANCE = new PerspectiveSwitcherCSSHandler();
 
   @Override
   protected void applyCSSProperty(Control control, String property, CSSValue value, String pseudo, CSSEngine engine)
@@ -37,6 +47,8 @@ public class PerspectiveSwitcherCSSHandler extends AbstractCSSPropertySWTHandler
         Color curveColor = null;
         if (value.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
           borderColor = (Color) engine.convert(value, Color.class, control.getDisplay());
+          borderColor = borderColor.isDisposed() ? null : borderColor;
+
           ((PerspectiveSwitcherSwtTrim) bar).setKeylineColor(borderColor, borderColor);
         } else if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
           CSSValueList list = (CSSValueList) value;
@@ -44,7 +56,11 @@ public class PerspectiveSwitcherCSSHandler extends AbstractCSSPropertySWTHandler
             CSSValue border = list.item(0);
             CSSValue curve = list.item(1);
             borderColor = (Color) engine.convert(border, Color.class, control.getDisplay());
+            borderColor = borderColor.isDisposed() ? null : borderColor;
+
             curveColor = (Color) engine.convert(curve, Color.class, control.getDisplay());
+            curveColor = curveColor.isDisposed() ? null : curveColor;
+
             ((PerspectiveSwitcherSwtTrim) bar).setKeylineColor(borderColor, curveColor);
           }
         }

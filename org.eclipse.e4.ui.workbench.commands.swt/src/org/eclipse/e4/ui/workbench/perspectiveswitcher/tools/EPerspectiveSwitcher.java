@@ -25,6 +25,10 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+/**
+ * Takes care of handling additions & removals of perspectives, name changes and the like.
+ *
+ */
 @Creatable
 public class EPerspectiveSwitcher {
 

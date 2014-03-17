@@ -30,128 +30,99 @@ import org.eclipse.swt.graphics.Image;
  *
  */
 public abstract class DelegatingLabelProviderWithTooltip extends ColumnLabelProvider {
-	/**
-	 * 
-	 */
-	private final ILabelDecorator decorator;
-	ILabelProvider wrappedLabelProvider;
+  /**
+   *
+   */
+  private final ILabelDecorator decorator;
 
-	/**
-	 * 
-	 * @param wrappedLabelProvider
-	 * @param decorator
-	 */
-	DelegatingLabelProviderWithTooltip(ILabelProvider wrappedLabelProvider, ILabelDecorator decorator) {
-		this.wrappedLabelProvider = wrappedLabelProvider;
-		this.decorator = decorator;
-		wrappedLabelProvider.addListener(new ILabelProviderListener() {
-			
-			@Override
-			public void labelProviderChanged(LabelProviderChangedEvent event) {
-				fireLabelProviderChanged(event);
-			}
-		});
-	}
+  ILabelProvider wrappedLabelProvider;
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.CellLabelProvider#initialize(org.eclipse.jface.viewers.ColumnViewer, org.eclipse.jface.viewers.ViewerColumn)
-	 */
-	@Override
-	protected void initialize(ColumnViewer viewer, ViewerColumn column) {
-		super.initialize(viewer, column);
-		if (decorator != null) {
-			ColumnViewerToolTipSupport.enableFor(viewer);
-		}
-	}
+  /**
+   * 
+   * @param pWrappedLabelProvider
+   * @param pDecorator
+   */
+  DelegatingLabelProviderWithTooltip(ILabelProvider pWrappedLabelProvider, ILabelDecorator pDecorator) {
+    this.wrappedLabelProvider = pWrappedLabelProvider;
+    this.decorator = pDecorator;
+    pWrappedLabelProvider.addListener(new ILabelProviderListener() {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.BaseLabelProvider#fireLabelProviderChanged(org.eclipse.jface.viewers.LabelProviderChangedEvent)
-	 */
-	@Override
-	protected void fireLabelProviderChanged(LabelProviderChangedEvent event) {
-		super.fireLabelProviderChanged(event);
-	}
+      @Override
+      public void labelProviderChanged(LabelProviderChangedEvent event) {
+        fireLabelProviderChanged(event);
+      }
+    });
+  }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getText(java.lang.Object)
-	 */
-	@Override
-	public String getText(Object element) {
-		return wrappedLabelProvider.getText(element);
-	}
+  @Override
+  protected void initialize(ColumnViewer viewer, ViewerColumn column) {
+    super.initialize(viewer, column);
+    if (decorator != null) {
+      ColumnViewerToolTipSupport.enableFor(viewer);
+    }
+  }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getImage(java.lang.Object)
-	 */
-	@Override
-	public Image getImage(Object element) {
-		return wrappedLabelProvider.getImage(element);
-	}
+  @Override
+  protected void fireLabelProviderChanged(LabelProviderChangedEvent event) {
+    super.fireLabelProviderChanged(event);
+  }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
-	 */
-	@Override
-	public Font getFont(Object element) {
-		if (wrappedLabelProvider instanceof IFontProvider) {
-			return ((IFontProvider) wrappedLabelProvider).getFont(element);
-		}
-		return null;
-	}
+  @Override
+  public String getText(Object element) {
+    return wrappedLabelProvider.getText(element);
+  }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getForeground(java.lang.Object)
-	 */
-	@Override
-	public Color getForeground(Object element) {
-		if (wrappedLabelProvider instanceof IColorProvider) {
-			return ((IColorProvider) wrappedLabelProvider).getForeground(element);
-		}
-		return null;
-	}
+  @Override
+  public Image getImage(Object element) {
+    return wrappedLabelProvider.getImage(element);
+  }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getBackground(java.lang.Object)
-	 */
-	@Override
-	public Color getBackground(Object element) {
-		if (wrappedLabelProvider instanceof IColorProvider) {
-			return ((IColorProvider) wrappedLabelProvider).getBackground(element);
-		}
-		return null;
-	}
+  @Override
+  public Font getFont(Object element) {
+    if (wrappedLabelProvider instanceof IFontProvider) {
+      return ((IFontProvider) wrappedLabelProvider).getFont(element);
+    }
+    return null;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
-	 */
-	@Override
-	public String getToolTipText(Object element) {
-		if (decorator == null) {
-			return null;
-		}
-		String text = getText(element);
-		element = unwrapElement(element);
-		return decorator.decorateText(text, element);
-	}
+  @Override
+  public Color getForeground(Object element) {
+    if (wrappedLabelProvider instanceof IColorProvider) {
+      return ((IColorProvider) wrappedLabelProvider).getForeground(element);
+    }
+    return null;
+  }
 
-	/**
-	 * Returns the element that will be used to determine the bundle id. In most
-	 * cases, this method can just return the provided element. Sometimes, it
-	 * might be necessary to return a nested object, or an
-	 * IConfigurationElement.
-	 * 
-	 * @param element
-	 * @return the element, or a client object wrapped by element, or an
-	 *         IConfigurationElement
-	 */
-	protected abstract Object unwrapElement(Object element);
+  @Override
+  public Color getBackground(Object element) {
+    if (wrappedLabelProvider instanceof IColorProvider) {
+      return ((IColorProvider) wrappedLabelProvider).getBackground(element);
+    }
+    return null;
+  }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.BaseLabelProvider#dispose()
-	 */
-	@Override
-	public void dispose() {
-		wrappedLabelProvider.dispose();
-		super.dispose();
-	}
+  @Override
+  public String getToolTipText(Object element) {
+    if (decorator == null) {
+      return null;
+    }
+    String text = getText(element);
+    element = unwrapElement(element);
+    return decorator.decorateText(text, element);
+  }
+
+  /**
+   * Returns the element that will be used to determine the bundle id. In most cases, this method can just return the
+   * provided element. Sometimes, it might be necessary to return a nested object, or an IConfigurationElement.
+   * 
+   * @param element
+   * @return the element, or a client object wrapped by element, or an IConfigurationElement
+   */
+  protected abstract Object unwrapElement(Object element);
+
+  @Override
+  public void dispose() {
+    wrappedLabelProvider.dispose();
+    super.dispose();
+  }
 }
