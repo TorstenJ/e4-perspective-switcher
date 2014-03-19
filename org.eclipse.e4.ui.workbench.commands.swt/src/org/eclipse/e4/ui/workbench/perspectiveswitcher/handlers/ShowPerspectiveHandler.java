@@ -29,72 +29,83 @@ import org.eclipse.e4.ui.workbench.perspectiveswitcher.internal.dialogs.SelectPe
 
 /**
  * Handler that will open the "Select perspective" dialog.
- *
+ * 
  */
 public final class ShowPerspectiveHandler {
 
-  /**
-   * Activates the handler for opening the perspective dialog.
-   *
-   * @param context
-   * @param perspectiveID
-   * @param newWindow
-   * @throws InvocationTargetException
-   * @throws InterruptedException
-   */
-  @Execute
-  public void execute(IEclipseContext context,
-      @Optional @Named(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID) String perspectiveID,
-      @Optional @Named(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW) String newWindow)
-      throws InvocationTargetException, InterruptedException {
+	/**
+	 * Activates the handler for opening the perspective dialog.
+	 * 
+	 * @param context
+	 * @param perspectiveID
+	 * @param newWindow
+	 * @throws InvocationTargetException
+	 * @throws InterruptedException
+	 */
+	@Execute
+	public void execute(
+			IEclipseContext context,
+			@Optional @Named(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID) String perspectiveID,
+			@Optional @Named(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW) String newWindow)
+			throws InvocationTargetException, InterruptedException {
 
-    if (perspectiveID == null || perspectiveID.equals("")) {
-      openSelectionDialog(context);
-    } else if (Boolean.parseBoolean(newWindow)) {
-      openNewWindowPerspective(context, perspectiveID);
-    } else {
-      openPerspective(context, perspectiveID);
-    }
-  }
+		if (perspectiveID == null || perspectiveID.equals("")) {
+			openSelectionDialog(context);
+		} else if (Boolean.parseBoolean(newWindow)) {
+			openNewWindowPerspective(context, perspectiveID);
+		} else {
+			openPerspective(context, perspectiveID);
+		}
+	}
 
-  /**
-   * Opens the specified perspective in a new window.
-   *
-   * @param perspectiveId The perspective to open; must not be <code>null</code>
-   * @throws ExecutionException If the perspective could not be opened.
-   */
-  private void openNewWindowPerspective(IEclipseContext context, String perspectiveID) {
-    MApplication application = context.get(MApplication.class);
-    EPartService partService = context.get(EPartService.class);
-    EModelService modelService = context.get(EModelService.class);
+	/**
+	 * Opens the specified perspective in a new window.
+	 * 
+	 * @param perspectiveId
+	 *            The perspective to open; must not be <code>null</code>
+	 * @throws ExecutionException
+	 *             If the perspective could not be opened.
+	 */
+	private void openNewWindowPerspective(IEclipseContext context,
+			String perspectiveID) {
+		MApplication application = context.get(MApplication.class);
+		EPartService partService = context.get(EPartService.class);
+		EModelService modelService = context.get(EModelService.class);
 
-    List<MPerspective> perspectives = modelService.findElements(application, perspectiveID, MPerspective.class, null);
-    partService.switchPerspective(perspectives.get(0));
-  }
+		List<MPerspective> perspectives = modelService.findElements(
+				application, perspectiveID, MPerspective.class, null);
+		partService.switchPerspective(perspectives.get(0));
+	}
 
-  /**
-   * Opens a view selection dialog, allowing the user to chose a view.
-   *
-   * @throws ExecutionException If the perspective could not be opened.
-   */
-  private final void openSelectionDialog(IEclipseContext context) {
-    SelectPerspectiveDialog dialog = ContextInjectionFactory.make(SelectPerspectiveDialog.class, context);
-    dialog.open();
-  }
+	/**
+	 * Opens a view selection dialog, allowing the user to chose a view.
+	 * 
+	 * @throws ExecutionException
+	 *             If the perspective could not be opened.
+	 */
+	private final void openSelectionDialog(IEclipseContext context) {
+		SelectPerspectiveDialog dialog = ContextInjectionFactory.make(
+				SelectPerspectiveDialog.class, context);
+		dialog.open();
+	}
 
-  /**
-   * Opens the perspective with the given identifier.
-   *
-   * @param perspectiveId The perspective to open; must not be <code>null</code>
-   * @throws ExecutionException If the perspective could not be opened.
-   */
-  private final void openPerspective(IEclipseContext context, String perspectiveID) {
-    MApplication application = context.get(MApplication.class);
-    EPartService partService = context.get(EPartService.class);
-    EModelService modelService = context.get(EModelService.class);
+	/**
+	 * Opens the perspective with the given identifier.
+	 * 
+	 * @param perspectiveId
+	 *            The perspective to open; must not be <code>null</code>
+	 * @throws ExecutionException
+	 *             If the perspective could not be opened.
+	 */
+	private final void openPerspective(IEclipseContext context,
+			String perspectiveID) {
+		MApplication application = context.get(MApplication.class);
+		EPartService partService = context.get(EPartService.class);
+		EModelService modelService = context.get(EModelService.class);
 
-    List<MPerspective> perspectives = modelService.findElements(application, perspectiveID, MPerspective.class, null);
-    partService.switchPerspective(perspectives.get(0));
-  }
+		List<MPerspective> perspectives = modelService.findElements(
+				application, perspectiveID, MPerspective.class, null);
+		partService.switchPerspective(perspectives.get(0));
+	}
 
 }

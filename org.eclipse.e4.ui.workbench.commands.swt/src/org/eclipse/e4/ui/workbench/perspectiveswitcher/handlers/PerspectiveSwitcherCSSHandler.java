@@ -24,55 +24,64 @@ import org.w3c.dom.css.CSSValueList;
 /**
  * Handler for the CSS style attributes of {@link PerspectiveSwitcherSwtTrim}.
  * <p>
- * Currently only <code>eclipse-perspective-keyline-color</code> with up to two color parameters:
+ * Currently only <code>eclipse-perspective-keyline-color</code> with up to two
+ * color parameters:
  * <ol>
  * <li>border color and
  * <li>curve color
  * </ol>
- *
+ * 
  */
-public class PerspectiveSwitcherCSSHandler extends AbstractCSSPropertySWTHandler {
+public class PerspectiveSwitcherCSSHandler extends
+		AbstractCSSPropertySWTHandler {
 
-  protected static final ICSSPropertyHandler INSTANCE = new PerspectiveSwitcherCSSHandler();
+	protected static final ICSSPropertyHandler INSTANCE = new PerspectiveSwitcherCSSHandler();
 
-  @Override
-  protected void applyCSSProperty(Control control, String property, CSSValue value, String pseudo, CSSEngine engine)
-      throws Exception {
+	@Override
+	protected void applyCSSProperty(Control control, String property,
+			CSSValue value, String pseudo, CSSEngine engine) throws Exception {
 
-    Object obj = control.getData("modelElement"); //$NON-NLS-1$
-    if (obj instanceof ToolControlImpl) {
-      Object bar = ((ToolControlImpl) obj).getObject();
-      if (bar != null && bar instanceof PerspectiveSwitcherSwtTrim) {
-        Color borderColor = null;
-        Color curveColor = null;
-        if (value.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
-          borderColor = (Color) engine.convert(value, Color.class, control.getDisplay());
-          borderColor = borderColor.isDisposed() ? null : borderColor;
+		Object obj = control.getData("modelElement"); //$NON-NLS-1$
+		if (obj instanceof ToolControlImpl) {
+			Object bar = ((ToolControlImpl) obj).getObject();
+			if (bar != null && bar instanceof PerspectiveSwitcherSwtTrim) {
+				Color borderColor = null;
+				Color curveColor = null;
+				if (value.getCssValueType() == CSSValue.CSS_PRIMITIVE_VALUE) {
+					borderColor = (Color) engine.convert(value, Color.class,
+							control.getDisplay());
+					borderColor = borderColor.isDisposed() ? null : borderColor;
 
-          ((PerspectiveSwitcherSwtTrim) bar).setKeylineColor(borderColor, borderColor);
-        } else if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
-          CSSValueList list = (CSSValueList) value;
-          if (list.getLength() == 2) {
-            CSSValue border = list.item(0);
-            CSSValue curve = list.item(1);
-            borderColor = (Color) engine.convert(border, Color.class, control.getDisplay());
-            borderColor = borderColor.isDisposed() ? null : borderColor;
+					((PerspectiveSwitcherSwtTrim) bar).setKeylineColor(
+							borderColor, borderColor);
+				} else if (value.getCssValueType() == CSSValue.CSS_VALUE_LIST) {
+					CSSValueList list = (CSSValueList) value;
+					if (list.getLength() == 2) {
+						CSSValue border = list.item(0);
+						CSSValue curve = list.item(1);
+						borderColor = (Color) engine.convert(border,
+								Color.class, control.getDisplay());
+						borderColor = borderColor.isDisposed() ? null
+								: borderColor;
 
-            curveColor = (Color) engine.convert(curve, Color.class, control.getDisplay());
-            curveColor = curveColor.isDisposed() ? null : curveColor;
+						curveColor = (Color) engine.convert(curve, Color.class,
+								control.getDisplay());
+						curveColor = curveColor.isDisposed() ? null
+								: curveColor;
 
-            ((PerspectiveSwitcherSwtTrim) bar).setKeylineColor(borderColor, curveColor);
-          }
-        }
+						((PerspectiveSwitcherSwtTrim) bar).setKeylineColor(
+								borderColor, curveColor);
+					}
+				}
 
-      }
-    }
-  }
+			}
+		}
+	}
 
-  @Override
-  protected String retrieveCSSProperty(Control control, String property, String pseudo, CSSEngine engine)
-      throws Exception {
-    // TODO Auto-generated method stub
-    return null;
-  }
+	@Override
+	protected String retrieveCSSProperty(Control control, String property,
+			String pseudo, CSSEngine engine) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

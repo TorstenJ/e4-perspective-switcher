@@ -13,40 +13,50 @@ package org.eclipse.e4.ui.workbench.perspectiveswitcher.tools;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 
 /**
- * The {@link EPerspectiveSwitcher} translates all the nitty gritty events into this simple interface for convenience.
- *
+ * The {@link EPerspectiveSwitcher} translates all the nitty gritty events into
+ * this simple interface for convenience.
+ * 
  */
 public interface IPerspectiveSwitcherControl {
 
-  /**
-   * Adds a shortcut for the referenced perspective to the visual perspective container.
-   * 
-   * @param perspective the perspective to add
-   */
-  void addPerspectiveShortcut(MPerspective perspective);
+	/**
+	 * Adds a shortcut for the referenced perspective to the visual perspective
+	 * container.
+	 * 
+	 * @param perspective
+	 *            the perspective to add
+	 */
+	void addPerspectiveShortcut(MPerspective perspective);
 
-  /**
-   * Removes the shortcut for the referenced perspective from the visual perspective container.
-   * 
-   * @param perspective the perspective to remove
-   */
-  void removePerspectiveShortcut(MPerspective perspective);
+	/**
+	 * Removes the shortcut for the referenced perspective from the visual
+	 * perspective container.
+	 * 
+	 * @param perspective
+	 *            the perspective to remove
+	 */
+	void removePerspectiveShortcut(MPerspective perspective);
 
-  /**
-   * Updates the active selection in the visual perspective container.
-   * 
-   * @param perspective the active perspective
-   */
-  void setSelectedElement(MPerspective perspective);
+	/**
+	 * Updates the active selection in the visual perspective container.
+	 * 
+	 * @param perspective
+	 *            the active perspective
+	 */
+	void setSelectedElement(MPerspective perspective);
 
-  /**
-   * Updates the given attribute for the perspective in the visual perspective container. Not all containers will
-   * support the same attributes.
-   * 
-   * @param perspective the perspective to update
-   * @param attributeName the attribute of the perspective to update
-   * @param newValue the updated value
-   */
-  void updateAttributeFor(MPerspective perspective, String attributeName, Object newValue);
+	/**
+	 * Updates the given attribute for the perspective in the visual perspective
+	 * container. Not all containers will support the same attributes.
+	 * 
+	 * @param perspective
+	 *            the perspective to update
+	 * @param attributeName
+	 *            the attribute of the perspective to update
+	 * @param newValue
+	 *            the updated value
+	 */
+	void updateAttributeFor(MPerspective perspective, String attributeName,
+			Object newValue);
 
 }

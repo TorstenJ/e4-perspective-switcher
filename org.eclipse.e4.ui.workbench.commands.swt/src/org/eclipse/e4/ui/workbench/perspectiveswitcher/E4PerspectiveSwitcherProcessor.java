@@ -27,65 +27,85 @@ import org.eclipse.e4.ui.workbench.perspectiveswitcher.handlers.ShowPerspectiveH
 
 /**
  * Sets up the commands & handlers for the perspective switcher menu.
- *
+ * 
  */
 public class E4PerspectiveSwitcherProcessor {
 
-  @Inject
-  private MApplication application;
+	@Inject
+	private MApplication application;
 
-  MCommandsFactory commandsFactory = MCommandsFactory.INSTANCE;
+	MCommandsFactory commandsFactory = MCommandsFactory.INSTANCE;
 
-  String contributorURI = E4PerspectiveSwitcherActivator.getDefault().getPlatformURI();
+	String contributorURI = E4PerspectiveSwitcherActivator.getDefault()
+			.getPlatformURI();
 
-  @Execute
-  void init() {
-    // Perspectives Category definition
-    MCategory perspectivesCategory = commandsFactory.createCategory();
-    perspectivesCategory.setContributorURI(contributorURI);
-    perspectivesCategory.setDescription(E4WorkbenchCommandConstants.CATEGORY_PERSPECTIVES$_DESCRIPTION);
-    perspectivesCategory.setElementId(E4WorkbenchCommandConstants.CATEGORY_PERSPECTIVES);
-    perspectivesCategory.setName(E4WorkbenchCommandConstants.CATEGORY_PERSPECTIVES$_NAME);
-    application.getCategories().add(perspectivesCategory);
+	@Execute
+	void init() {
+		// Perspectives Category definition
+		MCategory perspectivesCategory = commandsFactory.createCategory();
+		perspectivesCategory.setContributorURI(contributorURI);
+		perspectivesCategory
+				.setDescription(E4WorkbenchCommandConstants.CATEGORY_PERSPECTIVES$_DESCRIPTION);
+		perspectivesCategory
+				.setElementId(E4WorkbenchCommandConstants.CATEGORY_PERSPECTIVES);
+		perspectivesCategory
+				.setName(E4WorkbenchCommandConstants.CATEGORY_PERSPECTIVES$_NAME);
+		application.getCategories().add(perspectivesCategory);
 
-    { // Show Perspective command & handler with properties
-      MCommand showPerspectiveCommand = commandsFactory.createCommand();
-      showPerspectiveCommand.setContributorURI(contributorURI);
-      showPerspectiveCommand.setElementId(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE);
-      showPerspectiveCommand.setCategory(perspectivesCategory);
-      showPerspectiveCommand.setCommandName(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_NAME);
-      showPerspectiveCommand.setDescription(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIPTION);
-      application.getCommands().add(showPerspectiveCommand);
+		{ // Show Perspective command & handler with properties
+			MCommand showPerspectiveCommand = commandsFactory.createCommand();
+			showPerspectiveCommand.setContributorURI(contributorURI);
+			showPerspectiveCommand
+					.setElementId(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE);
+			showPerspectiveCommand.setCategory(perspectivesCategory);
+			showPerspectiveCommand
+					.setCommandName(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_NAME);
+			showPerspectiveCommand
+					.setDescription(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE$_DESCRIPTION);
+			application.getCommands().add(showPerspectiveCommand);
 
-      MCommandParameter parameterPerspectiveId = commandsFactory.createCommandParameter();
-      parameterPerspectiveId.setContributorURI(contributorURI);
-      parameterPerspectiveId.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID);
-      parameterPerspectiveId.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID$_NAME);
-      parameterPerspectiveId.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID$_OPTION);
-      showPerspectiveCommand.getParameters().add(parameterPerspectiveId);
+			MCommandParameter parameterPerspectiveId = commandsFactory
+					.createCommandParameter();
+			parameterPerspectiveId.setContributorURI(contributorURI);
+			parameterPerspectiveId
+					.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID);
+			parameterPerspectiveId
+					.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID$_NAME);
+			parameterPerspectiveId
+					.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID$_OPTION);
+			showPerspectiveCommand.getParameters().add(parameterPerspectiveId);
 
-      MCommandParameter parameterWindow = commandsFactory.createCommandParameter();
-      parameterWindow.setContributorURI(contributorURI);
-      parameterWindow.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW);
-      parameterWindow.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW$_NAME);
-      parameterWindow.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW$_OPTION);
-      showPerspectiveCommand.getParameters().add(parameterWindow);
+			MCommandParameter parameterWindow = commandsFactory
+					.createCommandParameter();
+			parameterWindow.setContributorURI(contributorURI);
+			parameterWindow
+					.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW);
+			parameterWindow
+					.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW$_NAME);
+			parameterWindow
+					.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_WINDOW$_OPTION);
+			showPerspectiveCommand.getParameters().add(parameterWindow);
 
-      MCommandParameter parameterNewWindow = commandsFactory.createCommandParameter();
-      parameterNewWindow.setContributorURI(contributorURI);
-      parameterNewWindow.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW);
-      parameterNewWindow.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW$_NAME);
-      parameterNewWindow.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW$_OPTION);
-      showPerspectiveCommand.getParameters().add(parameterNewWindow);
+			MCommandParameter parameterNewWindow = commandsFactory
+					.createCommandParameter();
+			parameterNewWindow.setContributorURI(contributorURI);
+			parameterNewWindow
+					.setElementId(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW);
+			parameterNewWindow
+					.setName(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW$_NAME);
+			parameterNewWindow
+					.setOptional(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW$_OPTION);
+			showPerspectiveCommand.getParameters().add(parameterNewWindow);
 
-      MHandler showTextHandler = commandsFactory.createHandler();
-      showTextHandler.setContributorURI(contributorURI);
-      showTextHandler.setElementId(E4WorkbenchHandlerConstants.PERSPECTIVES_SHOW_PERSPECTIVE);
-      showTextHandler.setCommand(showPerspectiveCommand);
-      showTextHandler.setContributionURI(E4PerspectiveSwitcherActivator.getDefault().getResourceURI(
-          ShowPerspectiveHandler.class));
-      application.getHandlers().add(showTextHandler);
-    }
-  }
+			MHandler showTextHandler = commandsFactory.createHandler();
+			showTextHandler.setContributorURI(contributorURI);
+			showTextHandler
+					.setElementId(E4WorkbenchHandlerConstants.PERSPECTIVES_SHOW_PERSPECTIVE);
+			showTextHandler.setCommand(showPerspectiveCommand);
+			showTextHandler.setContributionURI(E4PerspectiveSwitcherActivator
+					.getDefault().getResourceURI(ShowPerspectiveHandler.class));
+			application.getHandlers().add(showTextHandler);
+		}
+	}
 
 }

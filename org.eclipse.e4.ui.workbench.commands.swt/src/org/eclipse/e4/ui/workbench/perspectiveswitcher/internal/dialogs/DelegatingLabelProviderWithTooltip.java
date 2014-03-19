@@ -27,102 +27,109 @@ import org.eclipse.swt.graphics.Image;
 
 /**
  * @since 3.5
- *
+ * 
  */
-public abstract class DelegatingLabelProviderWithTooltip extends ColumnLabelProvider {
-  /**
+public abstract class DelegatingLabelProviderWithTooltip extends
+		ColumnLabelProvider {
+	/**
    *
    */
-  private final ILabelDecorator decorator;
+	private final ILabelDecorator decorator;
 
-  ILabelProvider wrappedLabelProvider;
+	ILabelProvider wrappedLabelProvider;
 
-  /**
-   * 
-   * @param pWrappedLabelProvider
-   * @param pDecorator
-   */
-  DelegatingLabelProviderWithTooltip(ILabelProvider pWrappedLabelProvider, ILabelDecorator pDecorator) {
-    this.wrappedLabelProvider = pWrappedLabelProvider;
-    this.decorator = pDecorator;
-    pWrappedLabelProvider.addListener(new ILabelProviderListener() {
+	/**
+	 * 
+	 * @param pWrappedLabelProvider
+	 * @param pDecorator
+	 */
+	DelegatingLabelProviderWithTooltip(ILabelProvider pWrappedLabelProvider,
+			ILabelDecorator pDecorator) {
+		this.wrappedLabelProvider = pWrappedLabelProvider;
+		this.decorator = pDecorator;
+		pWrappedLabelProvider.addListener(new ILabelProviderListener() {
 
-      @Override
-      public void labelProviderChanged(LabelProviderChangedEvent event) {
-        fireLabelProviderChanged(event);
-      }
-    });
-  }
+			@Override
+			public void labelProviderChanged(LabelProviderChangedEvent event) {
+				fireLabelProviderChanged(event);
+			}
+		});
+	}
 
-  @Override
-  protected void initialize(ColumnViewer viewer, ViewerColumn column) {
-    super.initialize(viewer, column);
-    if (decorator != null) {
-      ColumnViewerToolTipSupport.enableFor(viewer);
-    }
-  }
+	@Override
+	protected void initialize(ColumnViewer viewer, ViewerColumn column) {
+		super.initialize(viewer, column);
+		if (decorator != null) {
+			ColumnViewerToolTipSupport.enableFor(viewer);
+		}
+	}
 
-  @Override
-  protected void fireLabelProviderChanged(LabelProviderChangedEvent event) {
-    super.fireLabelProviderChanged(event);
-  }
+	@Override
+	protected void fireLabelProviderChanged(LabelProviderChangedEvent event) {
+		super.fireLabelProviderChanged(event);
+	}
 
-  @Override
-  public String getText(Object element) {
-    return wrappedLabelProvider.getText(element);
-  }
+	@Override
+	public String getText(Object element) {
+		return wrappedLabelProvider.getText(element);
+	}
 
-  @Override
-  public Image getImage(Object element) {
-    return wrappedLabelProvider.getImage(element);
-  }
+	@Override
+	public Image getImage(Object element) {
+		return wrappedLabelProvider.getImage(element);
+	}
 
-  @Override
-  public Font getFont(Object element) {
-    if (wrappedLabelProvider instanceof IFontProvider) {
-      return ((IFontProvider) wrappedLabelProvider).getFont(element);
-    }
-    return null;
-  }
+	@Override
+	public Font getFont(Object element) {
+		if (wrappedLabelProvider instanceof IFontProvider) {
+			return ((IFontProvider) wrappedLabelProvider).getFont(element);
+		}
+		return null;
+	}
 
-  @Override
-  public Color getForeground(Object element) {
-    if (wrappedLabelProvider instanceof IColorProvider) {
-      return ((IColorProvider) wrappedLabelProvider).getForeground(element);
-    }
-    return null;
-  }
+	@Override
+	public Color getForeground(Object element) {
+		if (wrappedLabelProvider instanceof IColorProvider) {
+			return ((IColorProvider) wrappedLabelProvider)
+					.getForeground(element);
+		}
+		return null;
+	}
 
-  @Override
-  public Color getBackground(Object element) {
-    if (wrappedLabelProvider instanceof IColorProvider) {
-      return ((IColorProvider) wrappedLabelProvider).getBackground(element);
-    }
-    return null;
-  }
+	@Override
+	public Color getBackground(Object element) {
+		if (wrappedLabelProvider instanceof IColorProvider) {
+			return ((IColorProvider) wrappedLabelProvider)
+					.getBackground(element);
+		}
+		return null;
+	}
 
-  @Override
-  public String getToolTipText(Object element) {
-    if (decorator == null) {
-      return null;
-    }
-    String text = getText(element);
-    element = unwrapElement(element);
-    return decorator.decorateText(text, element);
-  }
+	@Override
+	public String getToolTipText(Object element) {
+		if (decorator == null) {
+			return null;
+		}
+		String text = getText(element);
+		element = unwrapElement(element);
+		return decorator.decorateText(text, element);
+	}
 
-  /**
-   * Returns the element that will be used to determine the bundle id. In most cases, this method can just return the
-   * provided element. Sometimes, it might be necessary to return a nested object, or an IConfigurationElement.
-   * 
-   * @param element
-   * @return the element, or a client object wrapped by element, or an IConfigurationElement
-   */
-  protected abstract Object unwrapElement(Object element);
+	/**
+	 * Returns the element that will be used to determine the bundle id. In most
+	 * cases, this method can just return the provided element. Sometimes, it
+	 * might be necessary to return a nested object, or an
+	 * IConfigurationElement.
+	 * 
+	 * @param element
+	 * @return the element, or a client object wrapped by element, or an
+	 *         IConfigurationElement
+	 */
+	protected abstract Object unwrapElement(Object element);
 
-  @Override
-  public void dispose() {
-    wrappedLabelProvider.dispose();
-    super.dispose();
-  }
+	@Override
+	public void dispose() {
+		wrappedLabelProvider.dispose();
+		super.dispose();
+	}
 }

@@ -21,60 +21,63 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class E4PerspectiveSwitcherActivator implements BundleActivator {
 
-  /**
-   * The plug-in ID.
-   */
-  public static final String PLUGIN_ID = "org.eclipse.e4.ui.workbench.perspectiveswitcher"; //$NON-NLS-1$
+	/**
+	 * The plug-in ID.
+	 */
+	public static final String PLUGIN_ID = "org.eclipse.e4.ui.workbench.perspectiveswitcher"; //$NON-NLS-1$
 
-  private static final String RESOURCE_SCHEMA = "bundleclass://"; //$NON-NLS-1$
+	private static final String RESOURCE_SCHEMA = "bundleclass://"; //$NON-NLS-1$
 
-  private static final String RESOURCE_SEPARATOR = "/"; //$NON-NLS-1$
+	private static final String RESOURCE_SEPARATOR = "/"; //$NON-NLS-1$
 
-  // The shared instance
-  private static E4PerspectiveSwitcherActivator plugin;
+	// The shared instance
+	private static E4PerspectiveSwitcherActivator plugin;
 
-  /**
-   * The constructor
-   */
-  public E4PerspectiveSwitcherActivator() {
-  }
+	/**
+	 * The constructor
+	 */
+	public E4PerspectiveSwitcherActivator() {
+	}
 
-  @Override
-  public void start(BundleContext context) throws Exception {
-    plugin = this;
-  }
+	@Override
+	public void start(BundleContext context) throws Exception {
+		plugin = this;
+	}
 
-  @Override
-  public void stop(BundleContext context) throws Exception {
-    plugin = null;
-  }
+	@Override
+	public void stop(BundleContext context) throws Exception {
+		plugin = null;
+	}
 
-  /**
-   * Returns the shared instance
-   *
-   * @return the shared instance
-   */
-  public static E4PerspectiveSwitcherActivator getDefault() {
-    return plugin;
-  }
+	/**
+	 * Returns the shared instance
+	 * 
+	 * @return the shared instance
+	 */
+	public static E4PerspectiveSwitcherActivator getDefault() {
+		return plugin;
+	}
 
-  /**
-   * Returns the platform URI of the bundle
-   *
-   * @return the platform URI
-   */
-  public String getPlatformURI() {
-    return URIHelper.constructPlatformURI(FrameworkUtil.getBundle(E4PerspectiveSwitcherActivator.class));
-  }
+	/**
+	 * Returns the platform URI of the bundle
+	 * 
+	 * @return the platform URI
+	 */
+	public String getPlatformURI() {
+		return URIHelper.constructPlatformURI(FrameworkUtil
+				.getBundle(E4PerspectiveSwitcherActivator.class));
+	}
 
-  /**
-   * Returns the platform resource URI for the provided class
-   *
-   * @param clazz the class to get the resource URI for
-   * @return the platform resource URI
-   */
-  public String getResourceURI(Class<?> clazz) {
-    return RESOURCE_SCHEMA + PLUGIN_ID + RESOURCE_SEPARATOR + clazz.getCanonicalName();
-  }
+	/**
+	 * Returns the platform resource URI for the provided class
+	 * 
+	 * @param clazz
+	 *            the class to get the resource URI for
+	 * @return the platform resource URI
+	 */
+	public String getResourceURI(Class<?> clazz) {
+		return RESOURCE_SCHEMA + PLUGIN_ID + RESOURCE_SEPARATOR
+				+ clazz.getCanonicalName();
+	}
 
 }

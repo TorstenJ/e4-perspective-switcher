@@ -7,5 +7,5 @@
  *
  * Contributors:
  *     Joseph Carroll <jdsalingerjr@gmail.com> - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.eclipse.e4.ui.workbench.perspectiveswitcher.tools;

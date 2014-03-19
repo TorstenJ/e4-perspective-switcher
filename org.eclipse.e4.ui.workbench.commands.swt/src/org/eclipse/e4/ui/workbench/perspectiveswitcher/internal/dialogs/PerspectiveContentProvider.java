@@ -26,55 +26,59 @@ import org.eclipse.jface.viewers.Viewer;
 
 /**
  * Content provider for the "Select perspective" dialog table.
- *
+ * 
  */
 @Creatable
 public class PerspectiveContentProvider implements IStructuredContentProvider {
-  @Override
-  public void dispose() {
-    // no-op
-  }
+	@Override
+	public void dispose() {
+		// no-op
+	}
 
-  @Override
-  public Object[] getElements(Object element) {
-    List<MPerspective> perspectives = new ArrayList<MPerspective>(5);
+	@Override
+	public Object[] getElements(Object element) {
+		List<MPerspective> perspectives = new ArrayList<MPerspective>(5);
 
-    if (element instanceof MWindow) {
-      addElementsFrom((MWindow) element, perspectives);
-    }
+		if (element instanceof MWindow) {
+			addElementsFrom((MWindow) element, perspectives);
+		}
 
-    return perspectives.toArray();
-  }
+		return perspectives.toArray();
+	}
 
-  @Override
-  public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-    // no-op
-  }
+	@Override
+	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+		// no-op
+	}
 
-  private void addElementsFrom(MWindow window, List<MPerspective> perspectives) {
-    List<MWindowElement> windowElements = window.getChildren();
-    for (Iterator<MWindowElement> i = windowElements.iterator(); i.hasNext();) {
-      MWindowElement _elm = i.next();
+	private void addElementsFrom(MWindow window, List<MPerspective> perspectives) {
+		List<MWindowElement> windowElements = window.getChildren();
+		for (Iterator<MWindowElement> i = windowElements.iterator(); i
+				.hasNext();) {
+			MWindowElement _elm = i.next();
 
-      if (_elm instanceof MPerspectiveStack) {
-        perspectives.addAll(((MPerspectiveStack) _elm).getChildren());
-      } else if (_elm instanceof MPartSashContainer) {
-        addChildPerspectives((MPartSashContainer) _elm, perspectives);
-      }
-    }
-  }
+			if (_elm instanceof MPerspectiveStack) {
+				perspectives.addAll(((MPerspectiveStack) _elm).getChildren());
+			} else if (_elm instanceof MPartSashContainer) {
+				addChildPerspectives((MPartSashContainer) _elm, perspectives);
+			}
+		}
+	}
 
-  private void addChildPerspectives(MPartSashContainer partContainer, List<MPerspective> perspectives) {
-    List<MPartSashContainerElement> containerElements = partContainer.getChildren();
-    for (Iterator<MPartSashContainerElement> i = containerElements.iterator(); i.hasNext();) {
-      MPartSashContainerElement _elm = i.next();
+	private void addChildPerspectives(MPartSashContainer partContainer,
+			List<MPerspective> perspectives) {
+		List<MPartSashContainerElement> containerElements = partContainer
+				.getChildren();
+		for (Iterator<MPartSashContainerElement> i = containerElements
+				.iterator(); i.hasNext();) {
+			MPartSashContainerElement _elm = i.next();
 
-      if (_elm instanceof MPartSashContainer) {
-        addChildPerspectives((MPartSashContainer) _elm, perspectives);
-      }
-      if (_elm instanceof MPerspectiveStack) {
-        perspectives.addAll(((MPerspectiveStack) _elm).getChildren());
-      }
-    }
-  }
+			if (_elm instanceof MPartSashContainer) {
+				addChildPerspectives((MPartSashContainer) _elm, perspectives);
+			}
+			if (_elm instanceof MPerspectiveStack) {
+				perspectives.addAll(((MPerspectiveStack) _elm).getChildren());
+			}
+		}
+	}
 }
